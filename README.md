@@ -140,6 +140,9 @@ field is set server-side from the JWT and ignored if sent by the client.
 
 ## 8. Deployment
 
+> See **[DEPLOYMENT.md](DEPLOYMENT.md)** for a full step-by-step guide with exact
+> env-var values, the `render.yaml` blueprint, and Vercel config.
+
 Recommended free-tier hosting:
 
 - **Database:** MongoDB Atlas — create a cluster, allow network access, copy the

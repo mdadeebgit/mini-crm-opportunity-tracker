@@ -1,0 +1,24 @@
+# Render Blueprint for the Mini CRM backend.
+# In Render: New + → Blueprint → connect this repo. Render reads this file.
+# You will be prompted to fill the env vars marked `sync: false`.
+services:
+  - type: web
+    name: mini-crm-backend
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_EXPIRES_IN
+        value: 2h
+      # Set these in the Render dashboard (not committed):
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLIENT_URL
+        sync: false
