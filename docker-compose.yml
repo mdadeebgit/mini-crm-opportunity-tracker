@@ -1,0 +1,55 @@
+# Runs the full stack locally: MongoDB + backend API + frontend (nginx).
+#
+#   docker compose up --build
+#
+# Then open http://localhost:5173
+#
+# Values below are safe local defaults. Override JWT_SECRET (and others) via a
+# root .env file or your shell environment for anything beyond local dev.
+services:
+  mongo:
+    image: mongo:7
+    container_name: crm-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: crm-backend
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      MONGO_URI: mongodb://mongo:27017/mini_crm
+      JWT_SECRET: ${JWT_SECRET:-local_dev_secret_change_me}
+      JWT_EXPIRES_IN: 2h
+      CLIENT_URL: http://localhost:5173
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Browser runs on the host, so it reaches the backend at localhost:5000
+        VITE_API_URL: http://localhost:5000/api
+    container_name: crm-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+
+volumes:
+  mongo_data:

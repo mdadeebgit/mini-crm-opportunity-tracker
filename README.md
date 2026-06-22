@@ -111,6 +111,41 @@ npm run dev                 # starts on http://localhost:5173
 | -------------- | ------------------------ | ----------------------------- |
 | `VITE_API_URL` | Base URL of the backend  | `http://localhost:5000/api`   |
 
+## 5b. Run with Docker (full stack)
+
+The repo ships Dockerfiles for both apps and a `docker-compose.yml` that runs
+the frontend, backend, and a local MongoDB together — no local Node or Mongo
+install required.
+
+```bash
+# from the project root
+docker compose up --build
+```
+
+Then open **http://localhost:5173**. Services started:
+
+| Service  | URL / Port                     | Notes                                  |
+| -------- | ------------------------------ | -------------------------------------- |
+| frontend | http://localhost:5173          | nginx serving the built Vite app       |
+| backend  | http://localhost:5000/api      | Express API                            |
+| mongo    | localhost:27017                | data persisted in the `mongo_data` volume |
+
+Override the JWT secret for anything beyond local dev:
+
+```bash
+JWT_SECRET=your_long_random_secret docker compose up --build
+```
+
+To build the images individually:
+
+```bash
+docker build -t crm-backend ./backend
+docker build -t crm-frontend --build-arg VITE_API_URL=https://your-api/api ./frontend
+```
+
+> `VITE_API_URL` is baked into the frontend at **build time** (Vite inlines env
+> vars), so pass it as a build arg when targeting a non-local API.
+
 ## 6. API Reference
 
 Base URL: `<backend>/api`. All `/opportunities` routes require an
