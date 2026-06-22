@@ -52,6 +52,12 @@ export const getOpportunities = async (req, res, next) => {
       .populate('owner', 'name email')
       .sort(sortBy);
 
+    // Priority isn't a natural string sort (High/Low/Medium), so rank it explicitly.
+    if (sort === 'priority') {
+      const rank = { High: 3, Medium: 2, Low: 1 };
+      opportunities.sort((a, b) => (rank[b.priority] || 0) - (rank[a.priority] || 0));
+    }
+
     return res.status(200).json(opportunities);
   } catch (error) {
     return next(error);
