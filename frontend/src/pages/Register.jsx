@@ -29,7 +29,7 @@ export default function Register() {
     } catch (err) {
       const data = err.response?.data;
       if (data?.errors?.length) setFieldErrors(data.errors);
-      setError(data?.message || 'Registration failed. Please try again.');
+      setError(data?.message || err.friendlyMessage || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }

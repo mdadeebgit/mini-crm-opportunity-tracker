@@ -19,7 +19,7 @@ export default function Login() {
       await login(form.email, form.password);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed. Please try again.');
+      setError(err.response?.data?.message || err.friendlyMessage || 'Login failed. Please try again.');
     } finally {
       setLoading(false);
     }
