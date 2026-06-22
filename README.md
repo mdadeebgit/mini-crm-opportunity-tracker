@@ -5,6 +5,22 @@ opportunity pipeline. Teams can track leads, follow-ups, and deal stages, with
 JWT authentication and strict **ownership-based authorization** enforced on the
 backend.
 
+## 🚀 Live Demo
+
+| Resource | Link |
+| -------- | ---- |
+| **Live App** | https://mini-crm-opportunity-tracker-delta.vercel.app |
+| **Backend API** | https://mini-crm-backend-f5n9.onrender.com |
+| **API Health** | https://mini-crm-backend-f5n9.onrender.com/api/health |
+| **Source** | https://github.com/mdadeebgit/mini-crm-opportunity-tracker |
+
+> Registration is open — create an account to try it. A sample login is also
+> available: **`prodtest1@crm.com`** / **`test123`**.
+>
+> ⏳ The backend runs on Render's free tier and sleeps after ~15 minutes of
+> inactivity, so the **first request after idle may take 30–60 seconds** to
+> wake up. Subsequent requests are fast.
+
 ---
 
 ## 1. Project Overview
